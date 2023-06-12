@@ -22,18 +22,37 @@ class GithubService {
 class SearchProvider extends ChangeNotifier {
   GithubService _githubService = GithubService();
   List<Repository> _repositories = [];
-  bool _isLoading = false;  // 追加
+  bool _isLoading = false;
+  bool _hasSearched = false;
+  String _errorMessage = '';
 
   List<Repository> get repositories => _repositories;
-  bool get isLoading => _isLoading;  // 追加
+  bool get isLoading => _isLoading;
+  bool get hasSearched => _hasSearched;
+  String get errorMessage => _errorMessage;
 
-  search(String keyword) async {
-    _isLoading = true;  // 追加
+  void clear() {
+    _repositories = [];
+    _isLoading = false;
+    _hasSearched = false;
+    _errorMessage = '';
     notifyListeners();
+  }
 
-    _repositories = await _githubService.searchRepositories(keyword);
-
-    _isLoading = false;  // 追加
+  Future<void> search(String keyword) async {
+    _isLoading = true;
+    _hasSearched = true;
+    _errorMessage = '';
+    notifyListeners();
+    try {
+      _repositories = await _githubService.searchRepositories(keyword);
+      if (_repositories.isEmpty) {
+        _errorMessage = 'リポジトリが見つかりませんでした。';
+      }
+    } catch (e) {
+      _errorMessage = '不正なリクエストが送信されました。';
+    }
+    _isLoading = false;
     notifyListeners();
   }
 }
