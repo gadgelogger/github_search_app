@@ -4,7 +4,7 @@ import 'package:github_search_app/models/repository.dart';
 class DetailsScreen extends StatelessWidget {
   final Repository repository;
 
-  DetailsScreen({required this.repository});
+  const DetailsScreen({Key? key, required this.repository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
