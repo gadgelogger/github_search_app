@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+
   SearchScreen({Key? key}) : super(key: key);
 
   Widget _buildShimmer() {
@@ -47,22 +48,23 @@ class SearchScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       hintText: 'Search',
                       prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _controller.clear();
+                          context.read<SearchProvider>().clear();
+                        },
+                      ),
                       filled: true,
                       fillColor: Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20.0),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () {
-                    _controller.clear();
-                    context.read<SearchProvider>().clear();
-                  },
                 ),
               ],
             ),
@@ -77,13 +79,49 @@ class SearchScreen extends StatelessWidget {
                 if (provider.isLoading) {
                   return _buildShimmer();
                 } else if (provider.errorMessage.isNotEmpty) {
-                  return Center(
-                    child: Text(provider.errorMessage),
-                  );
+                  return  Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: 200,
+                              height: 200,
+                              child: Image(
+                                image: AssetImage('assets/error.gif'),
+                                fit: BoxFit.cover,
+                              )),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text(
+                            provider.errorMessage,
+                            style: TextStyle(fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ));
                 } else if (provider.repositories.isEmpty) {
-                  return const Center(
-                    child: Text('リポジトリを検索できます'),
-                  );
+                  return Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: 200,
+                          height: 200,
+                          child: Image(
+                            image: AssetImage('assets/search.gif'),
+                            fit: BoxFit.cover,
+                          )),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        'リポジトリを検索できます',
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ));
                 } else {
                   return ListView.builder(
                     itemCount: provider.repositories.length,
@@ -94,7 +132,8 @@ class SearchScreen extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => DetailsScreen(repository: repository),
+                            builder: (_) =>
+                                DetailsScreen(repository: repository),
                           ),
                         ),
                       );
