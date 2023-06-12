@@ -13,10 +13,14 @@ class SearchScreen extends StatelessWidget {
       itemBuilder: (_, __) => Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
-        child: ListTile(
-          title: Container(
-            color: Colors.white,
+        child: const ListTile(
+          title: SizedBox(
             height: 20.0,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
@@ -28,9 +32,9 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(60.0),
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -41,19 +45,19 @@ class SearchScreen extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       hintText: 'Search',
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       filled: true,
                       fillColor: Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.refresh),
+                  icon: const Icon(Icons.refresh),
                   onPressed: () {
                     _controller.clear();
                     context.read<SearchProvider>().clear();
@@ -76,7 +80,7 @@ class SearchScreen extends StatelessWidget {
                     child: Text(provider.errorMessage),
                   );
                 } else if (provider.repositories.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text('リポジトリを検索できます'),
                   );
                 } else {
