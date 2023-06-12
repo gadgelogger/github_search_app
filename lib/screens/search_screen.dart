@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+  SearchScreen({Key? key}) : super(key: key);
 
   Widget _buildShimmer() {
     return ListView.builder(
