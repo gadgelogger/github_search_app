@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:github_search_app/providers/search_provider.dart';
 import 'package:github_search_app/screens/details_screen.dart';
+import 'package:github_search_app/services/github_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

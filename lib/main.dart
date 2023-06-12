@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:github_search_app/screens/search_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:github_search_app/services/github_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,28 +13,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+        create: (_) => SearchProvider(),
+    child:MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
-    );
+      home:  SearchScreen(),
+    ));
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
