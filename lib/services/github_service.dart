@@ -20,13 +20,20 @@ class GithubService {
 }
 //ChangeNotifierを継承し、GitHubのリポジトリ検索を行うメソッドとその結果を保持するリスト
 class SearchProvider extends ChangeNotifier {
-  final GithubService _githubService = GithubService();
+  GithubService _githubService = GithubService();
   List<Repository> _repositories = [];
+  bool _isLoading = false;  // 追加
 
   List<Repository> get repositories => _repositories;
+  bool get isLoading => _isLoading;  // 追加
 
   search(String keyword) async {
+    _isLoading = true;  // 追加
+    notifyListeners();
+
     _repositories = await _githubService.searchRepositories(keyword);
+
+    _isLoading = false;  // 追加
     notifyListeners();
   }
 }
