@@ -62,15 +62,15 @@ class SearchScreen extends StatelessWidget {
                         filled: true,
                         // テーマの明るさによってfillColorを切り替える
                         fillColor:
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.grey[300]
-                            : Colors.grey[800],
+                            Theme.of(context).brightness == Brightness.light
+                                ? Colors.grey[300]
+                                : Colors.grey[800],
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                           borderSide: BorderSide.none,
                         ),
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 20.0),
+                            const EdgeInsets.symmetric(horizontal: 20.0),
                       ),
                     ),
                   ),
@@ -89,61 +89,106 @@ class SearchScreen extends StatelessWidget {
                   } else if (provider.errorMessage.isNotEmpty) {
                     return Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: 200,
-                                height: 200,
-                                child: Image(
-                                  image: AssetImage('assets/error.gif'),
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Text(
-                              provider.errorMessage,
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 200,
+                            height: 200,
+                            child: Image(
+                              image: AssetImage('assets/error.gif'),
+                              fit: BoxFit.cover,
+                            )),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          provider.errorMessage,
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ));
                   } else if (provider.repositories.isEmpty) {
                     return Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: 200,
-                                height: 200,
-                                child: Image(
-                                  image: AssetImage('assets/search.gif'),
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Text(
-                              'リポジトリを検索できます',
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 200,
+                            height: 200,
+                            child: Image(
+                              image: AssetImage('assets/search.gif'),
+                              fit: BoxFit.cover,
+                            )),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          'リポジトリを検索できます',
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ));
                   } else {
                     return ListView.builder(
                       itemCount: provider.repositories.length,
                       itemBuilder: (_, index) {
                         final repository = provider.repositories[index];
-                        return ListTile(
-                          title: Text(repository.name),
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  DetailsScreen(repository: repository),
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: ClipOval(
+                                child: Image.network(
+                                  repository.ownerIconUrl,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Text(
+                                repository.name,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Description: ${repository.description}'),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star_border),
+                                      Text('${repository.stars}'),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Container(
+                                        width: 10.0,
+                                        height: 10.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          // ここは適切な言語の色に変えてください
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5.0),
+                                      Text('Language: ${repository.language}'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      DetailsScreen(repository: repository),
+                                ),
+                              ),
                             ),
-                          ),
+                            Divider(
+                              color: Colors.black12,
+                            ), //区切り線
+                          ],
                         );
                       },
                     );
