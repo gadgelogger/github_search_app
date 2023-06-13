@@ -21,6 +21,11 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            // ダークモードでのカラースキームを定義するための追加の設定をここに追加できます。
+            useMaterial3: true,
+          ),
           home: SearchScreen(),
         ));
   }
