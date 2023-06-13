@@ -18,12 +18,15 @@ class MyApp extends StatelessWidget {
         child:  MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.light().copyWith(
+              primary: Colors.black,
+            ),
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            // ダークモードでのカラースキームを定義するための追加の設定をここに追加できます。
+            colorScheme: ColorScheme.dark().copyWith(
+              primary: Colors.grey[400],
+            ),
             useMaterial3: true,
           ),
           home: SearchScreen(),

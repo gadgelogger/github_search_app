@@ -56,7 +56,11 @@ class SearchScreen extends StatelessWidget {
                         },
                       ),
                       filled: true,
-                      fillColor: Colors.grey[300],
+                      // テーマの明るさによってfillColorを切り替える
+                      fillColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? Colors.grey[300]
+                              : Colors.grey[800],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide.none,
@@ -79,27 +83,27 @@ class SearchScreen extends StatelessWidget {
                 if (provider.isLoading) {
                   return _buildShimmer();
                 } else if (provider.errorMessage.isNotEmpty) {
-                  return  Center(
+                  return Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              width: 200,
-                              height: 200,
-                              child: Image(
-                                image: AssetImage('assets/error.gif'),
-                                fit: BoxFit.cover,
-                              )),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            provider.errorMessage,
-                            style: TextStyle(fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ));
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: 200,
+                          height: 200,
+                          child: Image(
+                            image: AssetImage('assets/error.gif'),
+                            fit: BoxFit.cover,
+                          )),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        provider.errorMessage,
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ));
                 } else if (provider.repositories.isEmpty) {
                   return Center(
                       child: Column(
