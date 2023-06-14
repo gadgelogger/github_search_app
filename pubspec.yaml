@@ -64,7 +64,7 @@ flutter_native_splash:
   image: 'assets/icon.png'
   color_dark: '#202124'
   image_dark: 'assets/icon_dark.png'
-  fullscreen: true
+  fullscreen: false
   branding: 'assets/logo.png'
   branding_dark: 'assets/logo.png'
   branding_mode: bottom
