@@ -37,6 +37,7 @@ class SearchScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,//画面をスクロールした時にAppBarに色が出るのをやめる
           title: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: Padding(
@@ -50,7 +51,7 @@ class SearchScreen extends StatelessWidget {
                         context.read<SearchProvider>().search(value);
                       },
                       decoration: InputDecoration(
-                        hintText: 'Search',
+                        hintText: '検索',
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.close),
@@ -81,6 +82,20 @@ class SearchScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Consumer<SearchProvider>(
+              builder: (_, provider, __) {
+                if (provider.hasSearched && !provider.isLoading && provider.errorMessage.isEmpty) {
+                  return Padding(padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text('${provider.totalCount}件',textAlign: TextAlign.start,style: TextStyle(fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                  );
+                }
+                return Container(); // 空のコンテナを返します
+              },
+            ),
             Expanded(
               child: Consumer<SearchProvider>(
                 builder: (_, provider, __) {
@@ -89,47 +104,47 @@ class SearchScreen extends StatelessWidget {
                   } else if (provider.errorMessage.isNotEmpty) {
                     return Center(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: 200,
-                            height: 200,
-                            child: Image(
-                              image: AssetImage('assets/error.gif'),
-                              fit: BoxFit.cover,
-                            )),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          provider.errorMessage,
-                          style: TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ));
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: 200,
+                                height: 200,
+                                child: Image(
+                                  image: AssetImage('assets/error.gif'),
+                                  fit: BoxFit.cover,
+                                )),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              provider.errorMessage,
+                              style: TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ));
                   } else if (provider.repositories.isEmpty) {
                     return Center(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: 200,
-                            height: 200,
-                            child: Image(
-                              image: AssetImage('assets/search.gif'),
-                              fit: BoxFit.cover,
-                            )),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          'リポジトリを検索できます',
-                          style: TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ));
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: 200,
+                                height: 200,
+                                child: Image(
+                                  image: AssetImage('assets/search.gif'),
+                                  fit: BoxFit.cover,
+                                )),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              'リポジトリを検索できます',
+                              style: TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ));
                   } else {
                     return ListView.builder(
                       itemCount: provider.repositories.length,
@@ -154,7 +169,7 @@ class SearchScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                      'Description: ${repository.description}'),
+                                      '${repository.description}'),
                                   Row(
                                     children: [
                                       Icon(Icons.star_border),
@@ -172,7 +187,7 @@ class SearchScreen extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(width: 5.0),
-                                      Text('Language: ${repository.language}'),
+                                      Text('${repository.language}'),
                                     ],
                                   ),
                                 ],
@@ -198,6 +213,7 @@ class SearchScreen extends StatelessWidget {
             ),
           ],
         ),
+
       ),
     );
   }
