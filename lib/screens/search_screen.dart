@@ -15,7 +15,14 @@ class SearchScreen extends StatelessWidget {
       itemBuilder: (_, __) => Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
-        child: const ListTile(
+        child: ListTile(
+          leading: ClipOval(
+            child: Container(
+              width: 50,
+              height: 50,
+              color: Colors.white,
+            ),
+          ),
           title: SizedBox(
             height: 20.0,
             child: DecoratedBox(
@@ -24,10 +31,59 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
           ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10.0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Row(
+                children: [
+                  Icon(Icons.star_border, color: Colors.white),
+                  SizedBox(
+                    width: 50.0,
+                    height: 10.0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Container(
+                    width: 10.0,
+                    height: 10.0,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 5.0),
+                  SizedBox(
+                    width: 100.0,
+                    height: 10.0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
