@@ -11,52 +11,56 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(repository.name),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(repository.ownerIconUrl),
-        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.code),
-                title: Text('Language'),
-                subtitle: Text(repository.language),
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(repository.ownerIconUrl),
               ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.star),
-                title: Text('Stars'),
-                subtitle: Text('${repository.stars}'),
+              SizedBox(height: 10),
+              Text(
+                repository.name,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.visibility),
-                title: Text('Watchers'),
-                subtitle: Text('${repository.watchers}'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.call_split),
-                title: Text('Forks'),
-                subtitle: Text('${repository.forks}'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.warning),
-                title: Text('Issues'),
-                subtitle: Text('${repository.issues}'),
-              ),
-            ),
-          ],
-        ),
+              SizedBox(height: 20),
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.code),
+            title: Text('Language'),
+            subtitle: Text('${repository.language}'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.star),
+            title: Text('Stars'),
+            subtitle: Text('${repository.stars}'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.visibility),
+            title: Text('Watchers'),
+            subtitle: Text('${repository.watchers}'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.call_split),
+            title: Text('Forks'),
+            subtitle: Text('${repository.forks}'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.warning),
+            title: Text('Issues'),
+            subtitle: Text('${repository.issues}'),
+          ),
+        ],
       ),
     );
   }

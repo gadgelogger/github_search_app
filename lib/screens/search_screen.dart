@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:github_search_app/services/github_service.dart';
 import 'package:github_search_app/screens/details_screen.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -155,7 +156,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                   );
                 }
-                return  Container();
+                return Container();
               },
             ),
             Expanded(
@@ -175,7 +176,7 @@ class SearchScreen extends StatelessWidget {
                               image: const AssetImage('assets/error.gif'),
                               fit: BoxFit.cover,
                             )),
-                       const SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                         Text(
@@ -190,7 +191,7 @@ class SearchScreen extends StatelessWidget {
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                       Container(
+                        Container(
                             width: 200,
                             height: 200,
                             child: Image(
@@ -225,60 +226,168 @@ class SearchScreen extends StatelessWidget {
                             final repository = provider.repositories[index];
                             return Column(
                               children: [
-                                ListTile(
-                                  leading: ClipOval(
-                                    child: Image.network(
-                                      repository.ownerIconUrl,
-                                      width: 50,
-                                      height: 50,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    repository.name,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${repository.description}',
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 6.0),
+                                  child: ExpansionTileCard(
+                                    leading: ClipOval(
+                                      child: Image.network(
+                                        repository.ownerIconUrl,
+                                        width: 50,
+                                        height: 50,
+                                        fit: BoxFit.cover,
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.star_border),
-                                          Text('${repository.stars}'),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Container(
-                                            width: 10.0,
-                                            height: 10.0,
-                                            decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              shape: BoxShape.circle,
+                                    ),
+                                    title: Text(
+                                      repository.name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? Colors.black
+                                              : Colors.white),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.star_border,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Colors.white),
+                                            Text(
+                                              '${repository.stars}',
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Colors.white),
                                             ),
-                                          ),
-                                          const SizedBox(width: 5.0),
-                                          Text('${repository.language}'),
-                                        ],
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Container(
+                                              width: 10.0,
+                                              height: 10.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5.0),
+                                            Text(
+                                              '${repository.language}',
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    children: <Widget>[
+                                      Divider(
+                                        height: 1.0,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.grey[300]
+                                            : Colors.grey[800],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start, // 追加
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                SizedBox(width: 8.0),
+                                                Expanded(
+                                                  child: Text(
+                                                    '${repository.description}',
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.remove_red_eye),
+                                                SizedBox(width: 8.0),
+                                                Text(
+                                                    'Watchers: ${repository.watchers}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.call_split),
+                                                SizedBox(width: 8.0),
+                                                Text(
+                                                    'Forks: ${repository.forks}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.report_problem),
+                                                SizedBox(width: 8.0),
+                                                Text(
+                                                    'Issues: ${repository.issues}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.star),
+                                                SizedBox(width: 8.0),
+                                                Text(
+                                                    'Stars: ${repository.stars}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                FloatingActionButton.extended(
+                                                  onPressed: () {},
+                                                  label: Text(
+                                                    'レポジトリを開く',
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.light
+                                                          ? Colors.black
+                                                          : Colors.white,
+                                                    ),
+                                                  ),
+                                                  //テキスト
+                                                  icon: Icon(Icons
+                                                      .open_in_new_outlined,color:  Theme.of(context).brightness == Brightness.light
+                                                      ? Colors.black
+                                                      : Colors.white,),
+                                                  //アイコン
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.light
+                                                          ? Colors.black
+                                                          : Colors.grey[700],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          DetailsScreen(repository: repository),
-                                    ),
-                                  ),
-                                ),
-                                Divider(
-                                  color: Colors.black12,
                                 ),
                               ],
                             );
