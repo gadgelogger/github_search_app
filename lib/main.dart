@@ -18,13 +18,13 @@ class MyApp extends StatelessWidget {
         child:  MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            colorScheme: ColorScheme.light().copyWith(
+            colorScheme:const ColorScheme.light().copyWith(
               primary: Colors.black,
             ),
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
-            colorScheme: ColorScheme.dark().copyWith(
+            colorScheme: const ColorScheme.dark().copyWith(
               primary: Colors.grey[400],
             ),
             useMaterial3: true,

@@ -24,10 +24,10 @@ class SearchScreen extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          title: SizedBox(
+          title: const SizedBox(
             height: 20.0,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
+            child: const DecoratedBox(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
             ),
@@ -35,30 +35,30 @@ class SearchScreen extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
+                child: const DecoratedBox(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5.0,
               ),
               Row(
                 children: [
                   Icon(Icons.star_border, color: Colors.white),
-                  SizedBox(
+                  const SizedBox(
                     width: 50.0,
                     height: 10.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
+                    child: const DecoratedBox(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Container(
@@ -66,12 +66,12 @@ class SearchScreen extends StatelessWidget {
                     height: 10.0,
                     color: Colors.white,
                   ),
-                  SizedBox(width: 5.0),
-                  SizedBox(
+                  const SizedBox(width: 5.0),
+                  const SizedBox(
                     width: 100.0,
                     height: 10.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
+                    child: const DecoratedBox(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                     ),
@@ -149,13 +149,13 @@ class SearchScreen extends StatelessWidget {
                         Text(
                           '${provider.totalCount}件',
                           textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   );
                 }
-                return Container();
+                return  Container();
               },
             ),
             Expanded(
@@ -171,16 +171,16 @@ class SearchScreen extends StatelessWidget {
                         Container(
                             width: 200,
                             height: 200,
-                            child: Image(
-                              image: AssetImage('assets/error.gif'),
+                            child: const Image(
+                              image: const AssetImage('assets/error.gif'),
                               fit: BoxFit.cover,
                             )),
-                        SizedBox(
+                       const SizedBox(
                           height: 50,
                         ),
                         Text(
                           provider.errorMessage,
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -190,7 +190,7 @@ class SearchScreen extends StatelessWidget {
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                       Container(
                             width: 200,
                             height: 200,
                             child: Image(

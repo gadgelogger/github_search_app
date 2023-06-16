@@ -11,17 +11,50 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(repository.name),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(repository.ownerIconUrl),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Language: ${repository.language}'),
-            Text('Stars: ${repository.stars}'),
-            Text('Watchers: ${repository.watchers}'),
-            Text('Forks: ${repository.forks}'),
-            Text('Issues: ${repository.issues}'),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.code),
+                title: Text('Language'),
+                subtitle: Text(repository.language),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.star),
+                title: Text('Stars'),
+                subtitle: Text('${repository.stars}'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.visibility),
+                title: Text('Watchers'),
+                subtitle: Text('${repository.watchers}'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.call_split),
+                title: Text('Forks'),
+                subtitle: Text('${repository.forks}'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.warning),
+                title: Text('Issues'),
+                subtitle: Text('${repository.issues}'),
+              ),
+            ),
           ],
         ),
       ),
