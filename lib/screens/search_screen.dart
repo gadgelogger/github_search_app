@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:github_search_app/services/github_service.dart';
 import 'package:shimmer/shimmer.dart';
@@ -7,8 +8,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+  var outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');
 
   SearchScreen({Key? key}) : super(key: key);
+
+
 
   Widget _buildShimmer(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -346,10 +350,35 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.star),
+                                                Icon(Icons.report_problem),
                                                 SizedBox(width: 8.0),
                                                 Text(
-                                                    'Stars: ${repository.stars}'),
+                                                  '${repository.license}',
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.access_time),
+                                                SizedBox(width: 8.0),
+                                                Text('${outputFormat.format(repository.createdAt)}に作成'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.access_time),
+                                                SizedBox(width: 8.0),
+                                                Text('${outputFormat.format(repository.updatedAt)}に最終更新'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.person_outline_outlined),
+                                                SizedBox(width: 8.0),
+                                                Text(repository.ower_name),
                                               ],
                                             ),
                                             Row(
@@ -358,13 +387,15 @@ class SearchScreen extends StatelessWidget {
                                               children: [
                                                 FloatingActionButton.extended(
                                                   onPressed: () async {
-                                                    String url = repository.html_url;
+                                                    String url =
+                                                        repository.html_url;
                                                     if (await canLaunch(url)) {
                                                       await launch(url);
                                                     } else {
                                                       throw 'Could not launch $url';
                                                     }
-                                                  },                                                  label: Text(
+                                                  },
+                                                  label: Text(
                                                     'レポジトリを開く',
                                                     style: TextStyle(
                                                       color: Theme.of(context)
@@ -375,10 +406,14 @@ class SearchScreen extends StatelessWidget {
                                                     ),
                                                   ),
                                                   //テキスト
-                                                  icon: Icon(Icons
-                                                      .open_in_new_outlined,color:  Theme.of(context).brightness == Brightness.light
-                                                      ? Colors.black
-                                                      : Colors.white,),
+                                                  icon: Icon(
+                                                    Icons.open_in_new_outlined,
+                                                    color: Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.light
+                                                        ? Colors.black
+                                                        : Colors.white,
+                                                  ),
                                                   //アイコン
                                                   backgroundColor:
                                                       Theme.of(context)
