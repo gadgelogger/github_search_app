@@ -4,9 +4,9 @@ import 'package:github_search_app/models/repository.dart';
 import 'package:flutter/foundation.dart';
 
 class GithubService {
-  Future<SearchResult> searchRepositories(String keyword) async {
+  Future<SearchResult> searchRepositories(String keyword, {int page = 1}) async {
     final response = await http.get(
-      Uri.parse('https://api.github.com/search/repositories?q=$keyword'),
+      Uri.parse('https://api.github.com/search/repositories?q=$keyword&page=$page'),
     );
 
     if (response.statusCode == 200) {
@@ -20,17 +20,19 @@ class GithubService {
     }
   }
 }
-//ChangeNotifierを継承し、GitHubのリポジトリ検索を行うメソッドとその結果を保持するリスト
+
 class SearchProvider extends ChangeNotifier {
   final GithubService _githubService = GithubService();
   List<Repository> _repositories = [];
   bool _isLoading = false;
+  bool _isLoadingMore = false; // <- added this line
   bool _hasSearched = false;
   String _errorMessage = '';
   int _totalCount = 0;
 
   List<Repository> get repositories => _repositories;
   bool get isLoading => _isLoading;
+  bool get isLoadingMore => _isLoadingMore; // <- added this line
   bool get hasSearched => _hasSearched;
   String get errorMessage => _errorMessage;
   int get totalCount => _totalCount;
@@ -38,6 +40,7 @@ class SearchProvider extends ChangeNotifier {
   void clear() {
     _repositories = [];
     _isLoading = false;
+    _isLoadingMore = false; // <- added this line
     _hasSearched = false;
     _errorMessage = '';
     _totalCount = 0;
@@ -62,8 +65,29 @@ class SearchProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
+  // fetchMore method
+  Future<void> fetchMore(String keyword) async {
+    _isLoadingMore = true; // Set loading more to true
+    notifyListeners();
+    try {
+      // Fetch next page of results based on the current list length
+      final result = await _githubService.searchRepositories(keyword, page: _repositories.length ~/ 10 + 1);
+      // Add new items to our list
+      _repositories.addAll(result.items);
+      _totalCount = result.totalCount;
+      if (_repositories.isEmpty) {
+        _errorMessage = 'リポジトリが見つかりませんでした。';
+      }
+    } catch (e) {
+      _errorMessage = '不正なリクエストが送信されました。';
+    }
+    _isLoadingMore = false; // Set loading more to false
+    notifyListeners();
+  }
 }
-//検索ワードにヒットしたリポジトリ数を
+
+
 class SearchResult {
   final int totalCount;
   final List<Repository> items;

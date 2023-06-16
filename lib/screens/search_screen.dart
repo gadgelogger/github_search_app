@@ -9,12 +9,13 @@ class SearchScreen extends StatelessWidget {
 
   SearchScreen({Key? key}) : super(key: key);
 
-  Widget _buildShimmer() {
+  Widget _buildShimmer(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (_, __) => Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+        highlightColor: isDarkMode ? Colors.grey[600]! : Colors.grey[200]!,
         child: ListTile(
           leading: ClipOval(
             child: Container(
@@ -84,16 +85,15 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus(); // タップするとフォーカスをクリアしてキーボードをしまう
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
-          scrolledUnderElevation: 0,//画面をスクロールした時にAppBarに色が出るのをやめる
+          scrolledUnderElevation: 0,
           title: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: Padding(
@@ -117,7 +117,6 @@ class SearchScreen extends StatelessWidget {
                           },
                         ),
                         filled: true,
-                        // テーマの明るさによってfillColorを切り替える
                         fillColor:
                             Theme.of(context).brightness == Brightness.light
                                 ? Colors.grey[300]
@@ -140,128 +139,156 @@ class SearchScreen extends StatelessWidget {
           children: [
             Consumer<SearchProvider>(
               builder: (_, provider, __) {
-                if (provider.hasSearched && !provider.isLoading && provider.errorMessage.isEmpty) {
-                  return Padding(padding: const EdgeInsets.all(8.0),
+                if (provider.hasSearched &&
+                    !provider.isLoading &&
+                    provider.errorMessage.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Text('${provider.totalCount}件',textAlign: TextAlign.start,style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(
+                          '${provider.totalCount}件',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   );
                 }
-                return Container(); // 空のコンテナを返します
+                return Container();
               },
             ),
             Expanded(
               child: Consumer<SearchProvider>(
                 builder: (_, provider, __) {
                   if (provider.isLoading) {
-                    return _buildShimmer();
+                    return _buildShimmer(context);
                   } else if (provider.errorMessage.isNotEmpty) {
                     return Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: 200,
-                                height: 200,
-                                child: Image(
-                                  image: AssetImage('assets/error.gif'),
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Text(
-                              provider.errorMessage,
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 200,
+                            height: 200,
+                            child: Image(
+                              image: AssetImage('assets/error.gif'),
+                              fit: BoxFit.cover,
+                            )),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          provider.errorMessage,
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ));
                   } else if (provider.repositories.isEmpty) {
                     return Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: 200,
-                                height: 200,
-                                child: Image(
-                                  image: AssetImage('assets/search.gif'),
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Text(
-                              'リポジトリを検索できます',
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 200,
+                            height: 200,
+                            child: Image(
+                              image: AssetImage('assets/search.gif'),
+                              fit: BoxFit.cover,
+                            )),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          'リポジトリを検索できます',
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ));
                   } else {
-                    return ListView.builder(
-                      itemCount: provider.repositories.length,
-                      itemBuilder: (_, index) {
-                        final repository = provider.repositories[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: ClipOval(
-                                child: Image.network(
-                                  repository.ownerIconUrl,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              title: Text(
-                                repository.name,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      '${repository.description}'),
-                                  Row(
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollEndNotification &&
+                            notification.metrics.pixels >=
+                                notification.metrics.maxScrollExtent - 200) {
+                          provider.fetchMore(_controller.text);
+                        }
+                        return false;
+                      },
+                      child: ListView.builder(
+                        itemCount: provider.repositories.length +
+                            (provider.isLoadingMore ? 1 : 0),
+                        itemBuilder: (_, index) {
+                          if (index < provider.repositories.length) {
+                            final repository = provider.repositories[index];
+                            return Column(
+                              children: [
+                                ListTile(
+                                  leading: ClipOval(
+                                    child: Image.network(
+                                      repository.ownerIconUrl,
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    repository.name,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Icon(Icons.star_border),
-                                      Text('${repository.stars}'),
-                                      SizedBox(
-                                        width: 20,
+                                      Text(
+                                        '${repository.description}',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      Container(
-                                        width: 10.0,
-                                        height: 10.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          // ここは適切な言語の色に変えてください
-                                          shape: BoxShape.circle,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star_border),
+                                          Text('${repository.stars}'),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Container(
+                                            width: 10.0,
+                                            height: 10.0,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5.0),
+                                          Text('${repository.language}'),
+                                        ],
                                       ),
-                                      const SizedBox(width: 5.0),
-                                      Text('${repository.language}'),
                                     ],
                                   ),
-                                ],
-                              ),
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      DetailsScreen(repository: repository),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          DetailsScreen(repository: repository),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Divider(
-                              color: Colors.black12,
-                            ), //区切り線
-                          ],
-                        );
-                      },
+                                Divider(
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            );
+                          } else if (provider.isLoadingMore) {
+                            return Center(child: CircularProgressIndicator());
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                      ),
                     );
                   }
                 },
@@ -269,7 +296,6 @@ class SearchScreen extends StatelessWidget {
             ),
           ],
         ),
-
       ),
     );
   }
