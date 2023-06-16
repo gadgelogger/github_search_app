@@ -329,7 +329,8 @@ class SearchScreen extends StatelessWidget {
                                                 Icon(Icons.remove_red_eye),
                                                 SizedBox(width: 8.0),
                                                 Text(
-                                                    'Watchers: ${repository.watchers}'),
+                                                    '${repository.watchers}'),
+                                                Text('Watchers',style: TextStyle(fontWeight: FontWeight.w200))
                                               ],
                                             ),
                                             Row(
@@ -337,7 +338,9 @@ class SearchScreen extends StatelessWidget {
                                                 Icon(Icons.call_split),
                                                 SizedBox(width: 8.0),
                                                 Text(
-                                                    'Forks: ${repository.forks}'),
+                                                    '${repository.forks}'),
+                                                Text('Forks',style: TextStyle(fontWeight: FontWeight.w200))
+
                                               ],
                                             ),
                                             Row(
@@ -345,12 +348,14 @@ class SearchScreen extends StatelessWidget {
                                                 Icon(Icons.report_problem),
                                                 SizedBox(width: 8.0),
                                                 Text(
-                                                    'Issues: ${repository.issues}'),
+                                                    '${repository.issues}'),
+                                                Text('Issues',style: TextStyle(fontWeight: FontWeight.w200))
+
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.report_problem),
+                                                Icon(Icons.book_rounded),
                                                 SizedBox(width: 8.0),
                                                 Text(
                                                   '${repository.license}',
@@ -376,7 +381,7 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.person_outline_outlined),
+                                                Icon(Icons.person),
                                                 SizedBox(width: 8.0),
                                                 Text(repository.ower_name),
                                               ],
@@ -401,7 +406,7 @@ class SearchScreen extends StatelessWidget {
                                                       color: Theme.of(context)
                                                                   .brightness ==
                                                               Brightness.light
-                                                          ? Colors.black
+                                                          ? Colors.white
                                                           : Colors.white,
                                                     ),
                                                   ),
@@ -411,7 +416,7 @@ class SearchScreen extends StatelessWidget {
                                                     color: Theme.of(context)
                                                                 .brightness ==
                                                             Brightness.light
-                                                        ? Colors.black
+                                                        ? Colors.white
                                                         : Colors.white,
                                                   ),
                                                   //アイコン
