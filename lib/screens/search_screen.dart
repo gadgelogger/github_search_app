@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:github_search_app/services/github_service.dart';
-import 'package:github_search_app/screens/details_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -357,8 +357,14 @@ class SearchScreen extends StatelessWidget {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 FloatingActionButton.extended(
-                                                  onPressed: () {},
-                                                  label: Text(
+                                                  onPressed: () async {
+                                                    String url = repository.html_url;
+                                                    if (await canLaunch(url)) {
+                                                      await launch(url);
+                                                    } else {
+                                                      throw 'Could not launch $url';
+                                                    }
+                                                  },                                                  label: Text(
                                                     'レポジトリを開く',
                                                     style: TextStyle(
                                                       color: Theme.of(context)
