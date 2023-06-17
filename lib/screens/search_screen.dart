@@ -13,8 +13,6 @@ class SearchScreen extends StatelessWidget {
 
   SearchScreen({Key? key}) : super(key: key);
 
-
-
   Widget _buildShimmer(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return ListView.builder(
@@ -25,15 +23,15 @@ class SearchScreen extends StatelessWidget {
         child: ListTile(
           leading: ClipOval(
             child: Container(
-              width: 50.w,
-              height: 50.h,
+              width: 50,
+              height: 50,
               color: Colors.white,
             ),
           ),
           title: const SizedBox(
             height: 20,
-            child: const DecoratedBox(
-              decoration: const BoxDecoration(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
                 color: Colors.white,
               ),
             ),
@@ -43,8 +41,8 @@ class SearchScreen extends StatelessWidget {
             children: [
               const SizedBox(
                 height: 10.0,
-                child: const DecoratedBox(
-                  decoration: const BoxDecoration(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                   ),
                 ),
@@ -54,7 +52,7 @@ class SearchScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(Icons.star_border, color: Colors.white),
+                  const Icon(Icons.star_border, color: Colors.white),
                   const SizedBox(
                     width: 50.0,
                     height: 10.0,
@@ -217,7 +215,6 @@ class SearchScreen extends StatelessWidget {
                         ),
                       ),
                     );
-
                   } else {
                     return NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
@@ -334,29 +331,33 @@ class SearchScreen extends StatelessWidget {
                                               children: [
                                                 Icon(Icons.remove_red_eye),
                                                 SizedBox(width: 8.0),
-                                                Text(
-                                                    '${repository.watchers}'),
-                                                Text('Watchers',style: TextStyle(fontWeight: FontWeight.w200))
+                                                Text('${repository.watchers}'),
+                                                Text('Watchers',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w200))
                                               ],
                                             ),
                                             Row(
                                               children: [
                                                 Icon(Icons.call_split),
                                                 SizedBox(width: 8.0),
-                                                Text(
-                                                    '${repository.forks}'),
-                                                Text('Forks',style: TextStyle(fontWeight: FontWeight.w200))
-
+                                                Text('${repository.forks}'),
+                                                Text('Forks',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w200))
                                               ],
                                             ),
                                             Row(
                                               children: [
                                                 Icon(Icons.report_problem),
                                                 SizedBox(width: 8.0),
-                                                Text(
-                                                    '${repository.issues}'),
-                                                Text('Issues',style: TextStyle(fontWeight: FontWeight.w200))
-
+                                                Text('${repository.issues}'),
+                                                Text('Issues',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w200))
                                               ],
                                             ),
                                             Row(
@@ -375,21 +376,23 @@ class SearchScreen extends StatelessWidget {
                                               children: [
                                                 Icon(Icons.access_time),
                                                 SizedBox(width: 8.0),
-                                                Text('${outputFormat.format(repository.createdAt)}に作成'),
+                                                Text(
+                                                    '${outputFormat.format(repository.createdAt)}に作成'),
                                               ],
                                             ),
                                             Row(
                                               children: [
                                                 Icon(Icons.access_time),
                                                 SizedBox(width: 8.0),
-                                                Text('${outputFormat.format(repository.updatedAt)}に最終更新'),
+                                                Text(
+                                                    '${outputFormat.format(repository.updatedAt)}に最終更新'),
                                               ],
                                             ),
                                             Row(
                                               children: [
                                                 Icon(Icons.person),
                                                 SizedBox(width: 8.0),
-                                                Text(repository.ower_name),
+                                                Text(repository.ownerName),
                                               ],
                                             ),
                                             Row(
@@ -399,7 +402,7 @@ class SearchScreen extends StatelessWidget {
                                                 FloatingActionButton.extended(
                                                   onPressed: () async {
                                                     String url =
-                                                        repository.html_url;
+                                                        repository.htmlUrl;
                                                     if (await canLaunch(url)) {
                                                       await launch(url);
                                                     } else {

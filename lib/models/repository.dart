@@ -9,11 +9,11 @@ class Repository {
   final int watchers;
   final int forks;
   final int issues;
-  final String html_url;
-  final String license;  // 追加
-  final DateTime createdAt;  // 型をStringからDateTimeに変更
-  final DateTime updatedAt;  // 型をStringからDateTimeに変更
-  final String ower_name;
+  final String htmlUrl;  // html_url -> htmlUrl
+  final String license;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String ownerName;  // ower_name -> ownerName
 
   Repository({
     required this.name,
@@ -24,11 +24,11 @@ class Repository {
     required this.watchers,
     required this.forks,
     required this.issues,
-    required this.html_url,
-    required this.license,  // 追加
-    required this.createdAt,  // 追加
-    required this.updatedAt, // 追加
-    required this.ower_name
+    required this.htmlUrl,  // html_url -> htmlUrl
+    required this.license,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.ownerName,  // ower_name -> ownerName
   });
 
   // データのパース用
@@ -37,7 +37,7 @@ class Repository {
     var createdAt = inputFormat.parse(json['created_at']);
     var updatedAt = inputFormat.parse(json['updated_at']);
     String license = json['license'] != null ? json['license']['name'] : 'N/A';
-    String ower_name = json['owner'] != null ? json['owner']['login'] : 'N/A';
+    String ownerName = json['owner'] != null ? json['owner']['login'] : 'N/A';
 
     return Repository(
       name: json['name'],
@@ -48,8 +48,8 @@ class Repository {
       watchers: json['watchers_count'],
       forks: json['forks_count'],
       issues: json['open_issues_count'],
-      html_url: json['html_url'],
-      ower_name: ower_name,
+      htmlUrl: json['html_url'],  // html_url -> htmlUrl
+      ownerName: ownerName,  // ower_name -> ownerName
       license: license,
       createdAt: createdAt,
       updatedAt: updatedAt,
