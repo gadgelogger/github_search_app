@@ -5,11 +5,10 @@ import 'package:github_search_app/services/github_service.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
-  var outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');
+  final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');
 
   SearchScreen({Key? key}) : super(key: key);
 
@@ -56,8 +55,8 @@ class SearchScreen extends StatelessWidget {
                   const SizedBox(
                     width: 50.0,
                     height: 10.0,
-                    child: const DecoratedBox(
-                      decoration: const BoxDecoration(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                       ),
                     ),
@@ -74,8 +73,8 @@ class SearchScreen extends StatelessWidget {
                   const SizedBox(
                     width: 100.0,
                     height: 10.0,
-                    child: const DecoratedBox(
-                      decoration: const BoxDecoration(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                       ),
                     ),
@@ -173,11 +172,11 @@ class SearchScreen extends StatelessWidget {
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        const SizedBox(
                             width: 200,
                             height: 200,
-                            child: const Image(
-                              image: const AssetImage('assets/error.gif'),
+                            child: Image(
+                              image: AssetImage('assets/error.gif'),
                               fit: BoxFit.cover,
                             )),
                         const SizedBox(
@@ -191,12 +190,12 @@ class SearchScreen extends StatelessWidget {
                       ],
                     ));
                   } else if (provider.repositories.isEmpty) {
-                    return Center(
+                    return const Center(
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                                 width: 200,
                                 height: 200,
                                 child: Image(
@@ -206,7 +205,7 @@ class SearchScreen extends StatelessWidget {
                             SizedBox(
                               height: 50,
                             ),
-                            Text(
+                           const Text(
                               'リポジトリを検索できます',
                               style: TextStyle(fontSize: 18),
                               textAlign: TextAlign.center,
@@ -275,13 +274,13 @@ class SearchScreen extends StatelessWidget {
                                                       ? Colors.black
                                                       : Colors.white),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
                                             Container(
                                               width: 10.0,
                                               height: 10.0,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Colors.green,
                                                 shape: BoxShape.circle,
                                               ),
@@ -316,7 +315,7 @@ class SearchScreen extends StatelessWidget {
                                           children: <Widget>[
                                             Row(
                                               children: [
-                                                SizedBox(width: 8.0),
+                                                const SizedBox(width: 8.0),
                                                 Expanded(
                                                   child: Text(
                                                     '${repository.description}',
@@ -329,10 +328,10 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.remove_red_eye),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.remove_red_eye),
+                                                const SizedBox(width: 8.0),
                                                 Text('${repository.watchers}'),
-                                                Text('Watchers',
+                                                const Text('Watchers',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w200))
@@ -340,10 +339,10 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.call_split),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.call_split),
+                                                const SizedBox(width: 8.0),
                                                 Text('${repository.forks}'),
-                                                Text('Forks',
+                                                const Text('Forks',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w200))
@@ -351,10 +350,10 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.report_problem),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.report_problem),
+                                                const SizedBox(width: 8.0),
                                                 Text('${repository.issues}'),
-                                                Text('Issues',
+                                                const Text('Issues',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w200))
@@ -362,8 +361,8 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.book_rounded),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.book_rounded),
+                                                const SizedBox(width: 8.0),
                                                 Text(
                                                   '${repository.license}',
                                                   maxLines: 2,
@@ -374,24 +373,24 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.access_time),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.access_time),
+                                                const SizedBox(width: 8.0),
                                                 Text(
                                                     '${outputFormat.format(repository.createdAt)}に作成'),
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.access_time),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.access_time),
+                                                const SizedBox(width: 8.0),
                                                 Text(
                                                     '${outputFormat.format(repository.updatedAt)}に最終更新'),
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                Icon(Icons.person),
-                                                SizedBox(width: 8.0),
+                                                const Icon(Icons.person),
+                                                const SizedBox(width: 8.0),
                                                 Text(repository.ownerName),
                                               ],
                                             ),
@@ -447,9 +446,9 @@ class SearchScreen extends StatelessWidget {
                               ],
                             );
                           } else if (provider.isLoadingMore) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(child: CircularProgressIndicator());
                           } else {
-                            return SizedBox();
+                            return const SizedBox();
                           }
                         },
                       ),
