@@ -205,7 +205,7 @@ class SearchScreen extends StatelessWidget {
                             SizedBox(
                               height: 50,
                             ),
-                           const Text(
+                            Text(
                               'リポジトリを検索できます',
                               style: TextStyle(fontSize: 18),
                               textAlign: TextAlign.center,
@@ -287,14 +287,14 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 5.0),
                                             Text(
-                                              '${repository.language}',
+                                              repository.language,
                                               style: TextStyle(
-                                                  color: Theme.of(context)
-                                                              .brightness ==
-                                                          Brightness.light
-                                                      ? Colors.black
-                                                      : Colors.white),
+                                                color: Theme.of(context).brightness == Brightness.light
+                                                    ? Colors.black
+                                                    : Colors.white,
+                                              ),
                                             ),
+
                                           ],
                                         ),
                                       ],
@@ -318,7 +318,7 @@ class SearchScreen extends StatelessWidget {
                                                 const SizedBox(width: 8.0),
                                                 Expanded(
                                                   child: Text(
-                                                    '${repository.description}',
+                                                    repository.description,
                                                     maxLines: 2,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -364,7 +364,7 @@ class SearchScreen extends StatelessWidget {
                                                 const Icon(Icons.book_rounded),
                                                 const SizedBox(width: 8.0),
                                                 Text(
-                                                  '${repository.license}',
+                                                  repository.license,
                                                   maxLines: 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -400,14 +400,14 @@ class SearchScreen extends StatelessWidget {
                                               children: [
                                                 FloatingActionButton.extended(
                                                   onPressed: () async {
-                                                    String url =
-                                                        repository.htmlUrl;
-                                                    if (await canLaunch(url)) {
-                                                      await launch(url);
+                                                    String url = repository.htmlUrl;
+                                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                                      await launchUrl(Uri.parse(url));
                                                     } else {
                                                       throw 'Could not launch $url';
                                                     }
                                                   },
+
                                                   label: Text(
                                                     'レポジトリを開く',
                                                     style: TextStyle(
