@@ -45,3 +45,29 @@ git clone https://github.com/gadgelogger/github_search_app.git
 
 - Firebase 連携とか
 
+##フォルダ構成
+```  
+// github_search_app/ - プロジェクトのルートディレクトリ
+// ├── android/ - ネイティブのAndroidコードを格納するためのディレクトリ
+// ├── ios/ - ネイティブのiOSコードを格納するためのディレクトリ
+// ├── lib/ - Dartのソースコードを格納するためのディレクトリ
+// │   ├── main.dart - アプリケーションのエントリーポイント
+// │   ├── screens/ - アプリケーションの各画面を格納するディレクトリ
+// │   │   ├── search_screen.dart - 検索画面のコードを格納するファイル
+// │   ├── providers/ - 状態管理に関するコードを格納するディレクトリ
+// │   │   ├── search_provider.dart - 検索機能に関する状態管理のコードを格納するファイル
+// │   ├── models/ - データモデルを格納するディレクトリ
+// │   │   ├── repository.dart - リポジトリのデータモデルを格納するファイル
+// ├── test/ - テストコードを格納するディレクトリ
+// │   ├── widget_test.dart - ウィジェットのテストコードを格納するファイル
+// ├── pubspec.yaml - アプリケーションの依存関係とメタデータを記述するファイル
+// └── README.md - プロジェクトに関する説明とドキュメンテーションを含むファイル
+              どの層からもアクセス可能な便利クラス（ロガー、拡張メソッドなど）
+```
+とりあえず素人ながらわかりやすいようにファイルを分割しています。（API関連はAPI関連/Screen関連はScreenへ）
+
+##CIとか
+- よくわからないので[GitHub Actions](https://github.co.jp/features/actions) を利用して CI を構築しています。
+  - 設定ではプルリクエストが作成や更新された時、もしくは `main` または `dev` ブランチに `push` されたときに CI が作動します。
+
+
