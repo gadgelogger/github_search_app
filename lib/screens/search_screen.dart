@@ -5,10 +5,19 @@ import 'package:github_search_app/services/github_service.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:github_search_app/i18n/translations.g.dart';
 class SearchScreen extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-  final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');
+  final TextEditingController _controller = TextEditingController();//検索フィールドのコントロール用
+  final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');//日付のフォーマット用
+  //ここから多言語化用
+  String hello = t.hello;
+  String search = t.search;
+  String error = t.error;
+  String none = t.none;
+  String result = t.result;
+  String open = t.open;
+  String make = t.make;
+  String update = t.update;
 
   SearchScreen({Key? key}) : super(key: key);
 
@@ -110,7 +119,7 @@ class SearchScreen extends StatelessWidget {
                         context.read<SearchProvider>().search(value);
                       },
                       decoration: InputDecoration(
-                        hintText: '検索',
+                        hintText: search,
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.close),
@@ -151,7 +160,7 @@ class SearchScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${provider.totalCount}件のリポジトリが見つかりました',
+                          '${provider.totalCount}${result}',
                           textAlign: TextAlign.start,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -190,7 +199,7 @@ class SearchScreen extends StatelessWidget {
                       ],
                     ));
                   } else if (provider.repositories.isEmpty) {
-                    return const Center(
+                    return  Center(
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +215,7 @@ class SearchScreen extends StatelessWidget {
                               height: 50,
                             ),
                             Text(
-                              'リポジトリを検索できます',
+                              hello,
                               style: TextStyle(fontSize: 18),
                               textAlign: TextAlign.center,
                             ),
@@ -376,7 +385,7 @@ class SearchScreen extends StatelessWidget {
                                                 const Icon(Icons.access_time),
                                                 const SizedBox(width: 8.0),
                                                 Text(
-                                                    '${outputFormat.format(repository.createdAt)}に作成'),
+                                                    '${outputFormat.format(repository.createdAt)}${make}'),
                                               ],
                                             ),
                                             Row(
@@ -384,7 +393,7 @@ class SearchScreen extends StatelessWidget {
                                                 const Icon(Icons.access_time),
                                                 const SizedBox(width: 8.0),
                                                 Text(
-                                                    '${outputFormat.format(repository.updatedAt)}に最終更新'),
+                                                    '${outputFormat.format(repository.updatedAt)}${update}'),
                                               ],
                                             ),
                                             Row(
@@ -409,7 +418,7 @@ class SearchScreen extends StatelessWidget {
                                                   },
 
                                                   label: Text(
-                                                    'レポジトリを開く',
+                                                    open,
                                                     style: TextStyle(
                                                       color: Theme.of(context)
                                                                   .brightness ==

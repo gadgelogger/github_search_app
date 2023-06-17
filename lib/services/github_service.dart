@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:github_search_app/models/repository.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:github_search_app/i18n/translations.g.dart';
 class GithubService {
   Future<SearchResult> searchRepositories(String keyword, {int page = 1}) async {
     final response = await http.get(
@@ -37,6 +37,11 @@ class SearchProvider extends ChangeNotifier {
   String get errorMessage => _errorMessage;
   int get totalCount => _totalCount;
 
+  //多言語化用
+  String error = t.error;
+  String none = t.none;
+
+
   void clear() {
     _repositories = [];
     _isLoading = false;
@@ -57,10 +62,10 @@ class SearchProvider extends ChangeNotifier {
       _repositories = result.items;
       _totalCount = result.totalCount;
       if (_repositories.isEmpty) {
-        _errorMessage = 'リポジトリが見つかりませんでした。';
+        _errorMessage = none;
       }
     } catch (e) {
-      _errorMessage = '不正なリクエストが送信されました。';
+      _errorMessage = error;
     }
     _isLoading = false;
     notifyListeners();
@@ -77,10 +82,10 @@ class SearchProvider extends ChangeNotifier {
       _repositories.addAll(result.items);
       _totalCount = result.totalCount;
       if (_repositories.isEmpty) {
-        _errorMessage = 'リポジトリが見つかりませんでした。';
+        _errorMessage = none;
       }
     } catch (e) {
-      _errorMessage = '不正なリクエストが送信されました。';
+      _errorMessage = error;
     }
     _isLoadingMore = false; // Set loading more to false
     notifyListeners();

@@ -3,9 +3,13 @@ import 'package:github_search_app/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:github_search_app/services/github_service.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'i18n/translations.g.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized(); // 追加
+  LocaleSettings.useDeviceLocale(); // 追加
+  runApp(TranslationProvider(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +20,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (_) => SearchProvider(),
         child: MaterialApp(
-          builder: (context, child) => ResponsiveBreakpoints.builder(
+
+            builder: (context, child) => ResponsiveBreakpoints.builder(
               child: child!,
               breakpoints: [
                 const Breakpoint(start: 0, end: 450, name: MOBILE),
@@ -38,6 +43,9 @@ class MyApp extends StatelessWidget {
             ),
             useMaterial3: true,
           ),
+          locale: TranslationProvider.of(context).flutterLocale,
+          supportedLocales: LocaleSettings.supportedLocales,
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
           home: SearchScreen(),
         ));
   }
