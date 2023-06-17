@@ -5,6 +5,7 @@ import 'package:github_search_app/services/github_service.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -24,13 +25,13 @@ class SearchScreen extends StatelessWidget {
         child: ListTile(
           leading: ClipOval(
             child: Container(
-              width: 50,
-              height: 50,
+              width: 50.w,
+              height: 50.h,
               color: Colors.white,
             ),
           ),
           title: const SizedBox(
-            height: 20.0,
+            height: 20,
             child: const DecoratedBox(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -150,9 +151,10 @@ class SearchScreen extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${provider.totalCount}件',
+                          '${provider.totalCount}件のリポジトリが見つかりました',
                           textAlign: TextAlign.start,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -192,26 +194,30 @@ class SearchScreen extends StatelessWidget {
                     ));
                   } else if (provider.repositories.isEmpty) {
                     return Center(
+                      child: SingleChildScrollView(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: 200,
-                            height: 200,
-                            child: Image(
-                              image: AssetImage('assets/search.gif'),
-                              fit: BoxFit.cover,
-                            )),
-                        SizedBox(
-                          height: 50,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: 200,
+                                height: 200,
+                                child: Image(
+                                  image: AssetImage('assets/search.gif'),
+                                  fit: BoxFit.cover,
+                                )),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              'リポジトリを検索できます',
+                              style: TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                        Text(
-                          'リポジトリを検索できます',
-                          style: TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ));
+                      ),
+                    );
+
                   } else {
                     return NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
