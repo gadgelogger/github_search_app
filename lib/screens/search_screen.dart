@@ -21,6 +21,7 @@ class SearchScreen extends StatelessWidget {
 
   SearchScreen({Key? key}) : super(key: key);
 
+  //読み込み時に表示するWidget
   Widget _buildShimmer(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return ListView.builder(
@@ -101,7 +102,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus();//キーボードのフォーカス関連
       },
       child: Scaffold(
         appBar: AppBar(
@@ -113,7 +114,7 @@ class SearchScreen extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: TextField(
+                    child: TextField(//検索フィールド
                       controller: _controller,
                       onSubmitted: (value) {
                         context.read<SearchProvider>().search(value);
@@ -140,7 +141,7 @@ class SearchScreen extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20.0),
                       ),
-                    ),
+                    ),//検索フォールド（ここまで）
                   ),
                 ],
               ),
