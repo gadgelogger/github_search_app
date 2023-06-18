@@ -32,8 +32,8 @@ enum AppLocale {
 /// Usage:
 /// String a = t.someKey.anotherKey;
 /// String b = t['someKey.anotherKey']; // Only for edge cases!
-_TranslationsEn _t = _currLocale.translations;
-_TranslationsEn get t => _t;
+TranslationsEn _t = _currLocale.translations;
+TranslationsEn get t => _t;
 
 /// Method B: Advanced
 ///
@@ -53,7 +53,7 @@ _TranslationsEn get t => _t;
 class Translations {
 	Translations._(); // no constructor
 
-	static _TranslationsEn of(BuildContext context) {
+	static TranslationsEn of(BuildContext context) {
 		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_InheritedLocaleData>();
 		if (inheritedWidget == null) {
 			throw 'Please wrap your app with "TranslationProvider".';
@@ -145,7 +145,7 @@ class AppLocaleUtils {
 
 // translation instances
 
- _TranslationsEn _translationsEn = _TranslationsEn.build();
+ TranslationsEn _translationsEn = TranslationsEn.build();
  _TranslationsJa _translationsJa = _TranslationsJa.build();
 
 // extensions for AppLocale
@@ -155,7 +155,7 @@ extension AppLocaleExtensions on AppLocale {
 	/// Gets the translation instance managed by this library.
 	/// [TranslationProvider] is using this instance.
 	/// The plural resolvers are set via [LocaleSettings].
-	_TranslationsEn get translations {
+	TranslationsEn get translations {
 		switch (this) {
 			case AppLocale.en: return _translationsEn;
 			case AppLocale.ja: return _translationsJa;
@@ -169,9 +169,9 @@ extension AppLocaleExtensions on AppLocale {
 	/// Usage:
 	/// final t = AppLocale.en.build(); // build
 	/// String a = t.my.path; // access
-	_TranslationsEn build() {
+	TranslationsEn build() {
 		switch (this) {
-			case AppLocale.en: return _TranslationsEn.build();
+			case AppLocale.en: return TranslationsEn.build();
 			case AppLocale.ja: return _TranslationsJa.build();
 		}
 	}
@@ -243,7 +243,7 @@ class TranslationProviderState extends State<TranslationProvider> {
 class _InheritedLocaleData extends InheritedWidget {
 	final AppLocale locale;
 	Locale get flutterLocale => locale.flutterLocale; // shortcut
-	final _TranslationsEn translations; // store translations to avoid switch call
+	final TranslationsEn translations; // store translations to avoid switch call
 
 	_InheritedLocaleData({required this.locale, required Widget child})
 		: translations = locale.translations, super(child: child);
@@ -291,11 +291,11 @@ AppLocale? _selectLocale(String localeRaw) {
 // translations
 
 // Path: <root>
-class _TranslationsEn {
+class TranslationsEn {
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	_TranslationsEn.build();
+	TranslationsEn.build();
 
 	/// Access flat map
 	dynamic operator[](String key) => _flatMap[key];
@@ -303,7 +303,7 @@ class _TranslationsEn {
 	// Internal flat map initialized lazily
 	late final Map<String, dynamic> _flatMap = _buildFlatMap();
 
-	late final _TranslationsEn _root = this; // ignore: unused_field
+	late final TranslationsEn _root = this; // ignore: unused_field
 
 	// Translations
 	String get hello => 'You can search repositories';
@@ -317,7 +317,7 @@ class _TranslationsEn {
 }
 
 // Path: <root>
-class _TranslationsJa implements _TranslationsEn {
+class _TranslationsJa implements TranslationsEn {
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
@@ -345,7 +345,7 @@ class _TranslationsJa implements _TranslationsEn {
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 
-extension on _TranslationsEn {
+extension on TranslationsEn {
 	Map<String, dynamic> _buildFlatMap() {
 		return <String, dynamic>{
 			'hello': 'You can search repositories',
