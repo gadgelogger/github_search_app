@@ -245,8 +245,11 @@ class InheritedLocaleData extends InheritedWidget {
 	Locale get flutterLocale => locale.flutterLocale; // shortcut
 	final TranslationsEn translations; // store translations to avoid switch call
 
-	InheritedLocaleData({required this.locale, required Widget child})
-		: translations = locale.translations, super(child: child);
+	InheritedLocaleData({
+		Key? key, // 追加されたkeyパラメータ
+		required this.locale,
+		required Widget child
+	}) : translations = locale.translations, super(key: key, child: child); // super constructorにkeyを渡す
 
 	@override
 	bool updateShouldNotify(InheritedLocaleData oldWidget) {
