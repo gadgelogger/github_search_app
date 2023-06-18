@@ -79,5 +79,7 @@ git clone https://github.com/gadgelogger/github_search_app.git
 ##CIとか
 - よくわからないので[GitHub Actions](https://github.co.jp/features/actions) を利用して CI を構築しています。
   - 設定ではプルリクエストが作成や更新された時、もしくは `main` または `dev` ブランチに `push` されたときに CI が作動します。
-
+##テストとか
+- よくわからないのでググってたらなんか色々できるっぽい。。。🤔🤔🤔🤔🤔
+  - とりあえず、検索フィールドが存在するかを確認→フィールドにFlutterと入力→エンターを押して問題がなければテストにパスするようにしてみました。
 
