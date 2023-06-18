@@ -124,7 +124,7 @@ class AppLocaleUtils {
 	/// Returns the locale of the device as the enum type.
 	/// Fallbacks to base locale.
 	static AppLocale findDeviceLocale() {
-		final String? deviceLocale = WidgetsBinding.instance.window.locale.toLanguageTag();
+		final String deviceLocale = WidgetsBinding.instance.platformDispatcher.locale.toLanguageTag() ?? '';
 		if (deviceLocale != null) {
 			final typedLocale = _selectLocale(deviceLocale);
 			if (typedLocale != null) {
@@ -147,8 +147,8 @@ class AppLocaleUtils {
 
 // translation instances
 
-late _TranslationsEn _translationsEn = _TranslationsEn.build();
-late _TranslationsJa _translationsJa = _TranslationsJa.build();
+ _TranslationsEn _translationsEn = _TranslationsEn.build();
+ _TranslationsJa _translationsJa = _TranslationsJa.build();
 
 // extensions for AppLocale
 
