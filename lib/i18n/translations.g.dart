@@ -205,7 +205,7 @@ extension StringAppLocaleExtensions on String {
 
 // wrappers
 
-GlobalKey<_TranslationProviderState> _translationProviderKey = GlobalKey<_TranslationProviderState>();
+GlobalKey<TranslationProviderState> _translationProviderKey = GlobalKey<TranslationProviderState>();
 
 class TranslationProvider extends StatefulWidget {
 	TranslationProvider({required this.child}) : super(key: _translationProviderKey);
@@ -213,7 +213,7 @@ class TranslationProvider extends StatefulWidget {
 	final Widget child;
 
 	@override
-	_TranslationProviderState createState() => _TranslationProviderState();
+	TranslationProviderState createState() => TranslationProviderState();
 
 	static _InheritedLocaleData of(BuildContext context) {
 		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_InheritedLocaleData>();
@@ -224,7 +224,7 @@ class TranslationProvider extends StatefulWidget {
 	}
 }
 
-class _TranslationProviderState extends State<TranslationProvider> {
+class TranslationProviderState extends State<TranslationProvider> {
 	AppLocale locale = _currLocale;
 
 	void setLocale(AppLocale newLocale) {

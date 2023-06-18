@@ -95,8 +95,6 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String hello = t.hello;
     String search = t.search;
-    String error = t.error;
-    String none = t.none;
     String result = t.result;
     String open = t.open;
     String make = t.make;
