@@ -3,6 +3,7 @@
 GithubAPIを利用してGithubのリポジトリを検索する超シンプルなアプリです。ど素人なので可能な限り頑張って、要件を満たすように作りました。
 > **:warning: 採点の前に**  
 > - 中の人はFlutter歴１年でド素人です。インターンにも落ちまくっておりチーム開発の経験がありません。なのでGithubのリポジトリ運用がめちゃくちゃだったりコード規則ガン無視で最高に汚いです。お許しください。
+> - GithubのAPIを認証していないため１分につき10回りクエストで制限がきます。なので全力でスワイプしスクロールし続けると「不正なリクエストが送信されました」と出る場合があります。
 > - できないならば出来ないなりに努力してChatGPTやネット等を使い調べて完成させました。拙い部分もありますが採点よろしくお願いします。
 
 ## とりまアプリの全体像
@@ -24,15 +25,22 @@ mainブランチにdevからmergeしてあるので、cloneすれば動くはず
 ```bash
 git clone https://github.com/gadgelogger/github_search_app.git
 ```
-## 技術スタックやら
+## 技術スタックやら(使用したパッケージ関連)
 - アプリの機能
   - GitHub リポジトリの検索と詳細表示
   - 無限スクロール対応
+  - いちいち画面転移するのダルいので１画面で完結するイケてるUI（expansion_tile_cardを使用（後述））
 - [fast_i18n](https://pub.dev/packages/fast_i18n) を使った多言語対応（日本語/英語）
 - [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) を使ったアプリアイコン
 - [flutter_native_splash](https://pub.dev/packages/flutter_native_splash) を使ったスプラッシュ画面
 - [responsive_framework](https://pub.dev/packages/responsive_framework) を使ったレスポンシブ対応
 - [GitHub Actions](https://github.co.jp/features/actions) によるCI(自動テストと自動ビルド)
+- [expansion_tile_card](https://pub.dev/packages/expansion_tile_card) によるいい感じなUI（画面転移をせずにListをタップするとリポジトリの詳細が閲覧できる）
+- [Shimmer](https://pub.dev/packages/shimmer/install)によるイケてるローディングUI（CircularProgressIndicatorは飽きた）
+- [url_launcher](https://pub.dev/packages/url_launcher)ブラウザを開く際に使用
+- [intl](https://pub.dev/packages/intl)多言語化関連とか日付のフォーマットに使用
+- [provider](https://pub.dev/packages/provider)状態管理に使用
+
 - ダークモード対応
 - サポートするプラットフォーム
   - iOS / Android 
@@ -53,6 +61,7 @@ git clone https://github.com/gadgelogger/github_search_app.git
 // ├── lib/ - Dartのソースコードを格納するためのディレクトリ
 // │   ├── main.dart - アプリケーションのエントリーポイント
 // │   ├── screens/ - アプリケーションの各画面を格納するディレクトリ
+// │   ├── i18n/ - 多言語化用のファイルを格納するためのディレクトリ
 // │   │   ├── search_screen.dart - 検索画面のコードを格納するファイル
 // │   ├── providers/ - 状態管理に関するコードを格納するディレクトリ
 // │   │   ├── search_provider.dart - 検索機能に関する状態管理のコードを格納するファイル
