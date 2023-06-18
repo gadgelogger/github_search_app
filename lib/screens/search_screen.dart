@@ -9,17 +9,8 @@ import 'package:github_search_app/i18n/translations.g.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController _controller =
-      TextEditingController(); //検索フィールドのコントロール用
+  TextEditingController(); //検索フィールドのコントロール用
   final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm'); //日付のフォーマット用
-  //ここから多言語化用
-  String hello = t.hello;
-  String search = t.search;
-  String error = t.error;
-  String none = t.none;
-  String result = t.result;
-  String open = t.open;
-  String make = t.make;
-  String update = t.update;
 
   SearchScreen({Key? key}) : super(key: key);
 
@@ -102,6 +93,15 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String hello = t.hello;
+    String search = t.search;
+    String error = t.error;
+    String none = t.none;
+    String result = t.result;
+    String open = t.open;
+    String make = t.make;
+    String update = t.update;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus(); //キーボードのフォーカス関連
@@ -164,7 +164,7 @@ class SearchScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${provider.totalCount}${result}',
+                          '${provider.totalCount}$result',
                           textAlign: TextAlign.start,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -211,16 +211,16 @@ class SearchScreen extends StatelessWidget {
                             const SizedBox(
                                 width: 200,
                                 height: 200,
-                                child: const Image(
-                                  image:const AssetImage('assets/search.gif'),
+                                child: Image(
+                                  image: AssetImage('assets/search.gif'),
                                   fit: BoxFit.cover,
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             Text(
                               hello,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -392,7 +392,8 @@ class SearchScreen extends StatelessWidget {
                                                 const Icon(Icons.access_time),
                                                 const SizedBox(width: 8.0),
                                                 Text(
-                                                    '${outputFormat.format(repository.createdAt)}${make}'),
+                                                  '${outputFormat.format(repository.createdAt)}$make',
+                                                ),
                                               ],
                                             ),
                                             Row(
@@ -400,7 +401,8 @@ class SearchScreen extends StatelessWidget {
                                                 const Icon(Icons.access_time),
                                                 const SizedBox(width: 8.0),
                                                 Text(
-                                                    '${outputFormat.format(repository.updatedAt)}${update}'),
+                                                  '${outputFormat.format(repository.updatedAt)}$update',
+                                                ),
                                               ],
                                             ),
                                             Row(
