@@ -6,9 +6,11 @@ import 'package:shimmer/shimmer.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:github_search_app/i18n/translations.g.dart';
+
 class SearchScreen extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();//検索フィールドのコントロール用
-  final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm');//日付のフォーマット用
+  final TextEditingController _controller =
+      TextEditingController(); //検索フィールドのコントロール用
+  final outputFormat = DateFormat('yyyy/MM/dd/ HH:mm'); //日付のフォーマット用
   //ここから多言語化用
   String hello = t.hello;
   String search = t.search;
@@ -102,7 +104,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();//キーボードのフォーカス関連
+        FocusScope.of(context).unfocus(); //キーボードのフォーカス関連
       },
       child: Scaffold(
         appBar: AppBar(
@@ -114,7 +116,8 @@ class SearchScreen extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: TextField(//検索フィールド
+                    child: TextField(
+                      //検索フィールド
                       controller: _controller,
                       onSubmitted: (value) {
                         context.read<SearchProvider>().search(value);
@@ -141,7 +144,7 @@ class SearchScreen extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20.0),
                       ),
-                    ),//検索フォールド（ここまで）
+                    ), //検索フォールド（ここまで）
                   ),
                 ],
               ),
@@ -200,16 +203,16 @@ class SearchScreen extends StatelessWidget {
                       ],
                     ));
                   } else if (provider.repositories.isEmpty) {
-                    return  Center(
+                    return Center(
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                                 width: 200,
                                 height: 200,
-                                child: Image(
-                                  image: AssetImage('assets/search.gif'),
+                                child: const Image(
+                                  image:const AssetImage('assets/search.gif'),
                                   fit: BoxFit.cover,
                                 )),
                             SizedBox(
@@ -299,12 +302,13 @@ class SearchScreen extends StatelessWidget {
                                             Text(
                                               repository.language,
                                               style: TextStyle(
-                                                color: Theme.of(context).brightness == Brightness.light
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.light
                                                     ? Colors.black
                                                     : Colors.white,
                                               ),
                                             ),
-
                                           ],
                                         ),
                                       ],
@@ -338,7 +342,8 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                const Icon(Icons.remove_red_eye),
+                                                const Icon(
+                                                    Icons.remove_red_eye),
                                                 const SizedBox(width: 8.0),
                                                 Text('${repository.watchers}'),
                                                 const Text('Watchers',
@@ -360,7 +365,8 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                const Icon(Icons.report_problem),
+                                                const Icon(
+                                                    Icons.report_problem),
                                                 const SizedBox(width: 8.0),
                                                 Text('${repository.issues}'),
                                                 const Text('Issues',
@@ -410,9 +416,12 @@ class SearchScreen extends StatelessWidget {
                                               children: [
                                                 FloatingActionButton.extended(
                                                   onPressed: () async {
-                                                    String url = repository.htmlUrl;
-                                                    if (await canLaunchUrl(Uri.parse(url))) {
-                                                      await launchUrl(Uri.parse(url));
+                                                    String url =
+                                                        repository.htmlUrl;
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(url))) {
+                                                      await launchUrl(
+                                                          Uri.parse(url));
                                                     } else {
                                                       throw 'Could not launch $url';
                                                     }
@@ -456,7 +465,8 @@ class SearchScreen extends StatelessWidget {
                               ],
                             );
                           } else if (provider.isLoadingMore) {
-                            return const Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else {
                             return const SizedBox();
                           }

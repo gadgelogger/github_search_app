@@ -9,7 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 追加
   LocaleSettings.useDeviceLocale(); // 追加
-  runApp(TranslationProvider(child: MyApp()));
+  runApp(TranslationProvider(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,15 +20,14 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (_) => SearchProvider(),
         child: MaterialApp(
-
-            builder: (context, child) => ResponsiveBreakpoints.builder(
-              child: child!,
-              breakpoints: [
-                const Breakpoint(start: 0, end: 450, name: MOBILE),
-                const Breakpoint(start: 451, end: 800, name: TABLET),
-                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-              ],
+          builder: (context, child) => ResponsiveBreakpoints.builder(
+            child: child!,
+            breakpoints: [
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+            ],
           ),
           title: 'Flutter Demo',
           theme: ThemeData(
