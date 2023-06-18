@@ -54,7 +54,7 @@ class Translations {
 	Translations._(); // no constructor
 
 	static TranslationsEn of(BuildContext context) {
-		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_InheritedLocaleData>();
+		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<InheritedLocaleData>();
 		if (inheritedWidget == null) {
 			throw 'Please wrap your app with "TranslationProvider".';
 		}
@@ -213,8 +213,8 @@ class TranslationProvider extends StatefulWidget {
 	@override
 	TranslationProviderState createState() => TranslationProviderState();
 
-	static _InheritedLocaleData of(BuildContext context) {
-		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_InheritedLocaleData>();
+	static InheritedLocaleData of(BuildContext context) {
+		final inheritedWidget = context.dependOnInheritedWidgetOfExactType<InheritedLocaleData>();
 		if (inheritedWidget == null) {
 			throw 'Please wrap your app with "TranslationProvider".';
 		}
@@ -233,23 +233,23 @@ class TranslationProviderState extends State<TranslationProvider> {
 
 	@override
 	Widget build(BuildContext context) {
-		return _InheritedLocaleData(
+		return InheritedLocaleData(
 			locale: locale,
 			child: widget.child,
 		);
 	}
 }
 
-class _InheritedLocaleData extends InheritedWidget {
+class InheritedLocaleData extends InheritedWidget {
 	final AppLocale locale;
 	Locale get flutterLocale => locale.flutterLocale; // shortcut
 	final TranslationsEn translations; // store translations to avoid switch call
 
-	_InheritedLocaleData({required this.locale, required Widget child})
+	InheritedLocaleData({required this.locale, required Widget child})
 		: translations = locale.translations, super(child: child);
 
 	@override
-	bool updateShouldNotify(_InheritedLocaleData oldWidget) {
+	bool updateShouldNotify(InheritedLocaleData oldWidget) {
 		return oldWidget.locale != locale;
 	}
 }
